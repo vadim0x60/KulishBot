@@ -17,7 +17,7 @@ searcher = Searcher(db, CosineMeasure())
 def is_english(text):
     english = 0
     total = 0
-    for token in re.split('[^a-zA-Zа-яА-Я]+', text):
+    for token in re.split('[\W0123456789]+', text):
         if not token:
             continue
     
