@@ -24,12 +24,11 @@ def is_english(text):
         if searcher.search(token, 0.7):
             english += 1
         total += 1
-    return english / total > 0.7
+    return english / total > 0.5
 
 kulish_text = "English speaking is the pride, asset and value of Skoltech. Fluent widespread English makes Skoltech capable of becoming truly international place, attracting international students and building great careers and relationships. Hence we must be paranoid about upholding the tradition and habit of Skoltech speaking English."
 
 def handle_message(bot, update):
-    print(update.message)
     if not is_english(update.message.text):
         update.message.reply_text(kulish_text)
 
