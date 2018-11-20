@@ -43,5 +43,5 @@ updater.dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
 updater.start_webhook(listen="0.0.0.0",
                       port=PORT,
                       url_path=TOKEN)
-updater.bot.set_webhook("https://kulishbot.herokuapp.com/" + TOKEN)
+updater.bot.set_webhook("https://kulish-bot.herokuapp.com/" + TOKEN)
 updater.idle()
