@@ -5,7 +5,6 @@ from simstring.measure.cosine import CosineMeasure
 from simstring.database.dict import DictDatabase
 from simstring.searcher import Searcher
 import re
-import env
 
 db = DictDatabase(CharacterNgramFeatureExtractor(2))
 
@@ -22,10 +21,10 @@ def is_english(text):
         if not token:
             continue
     
-        if searcher.search(token, 0.7):
+        if searcher.search(token.lower(), 0.85):
             english += 1
         total += 1
-    return (english / total >= 0.5) or total < 2
+    return (english / total >= 0.7) or total < 2
 
 kulish_text = "English speaking is the pride, asset and value of Skoltech. Fluent widespread English makes Skoltech capable of becoming truly international place, attracting international students and building great careers and relationships. Hence we must be paranoid about upholding the tradition and habit of Skoltech speaking English."
 
@@ -33,15 +32,17 @@ def handle_message(bot, update):
     if not is_english(update.message.text):
         update.message.reply_text(kulish_text)
 
-import os
 
-TOKEN = os.environ.get('TELEGRAM_TOKEN')
-PORT = int(os.environ.get('PORT', '8443'))
-updater = Updater(TOKEN)
-updater.dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
-# add handlers
-updater.start_webhook(listen="0.0.0.0",
-                      port=PORT,
-                      url_path=TOKEN)
-updater.bot.set_webhook(os.environ.get('MY_URL') + '/' + TOKEN)
-updater.idle()
+if __name__ == '__main__':
+    import os
+
+    TOKEN = os.environ.get('TELEGRAM_TOKEN')
+    PORT = int(os.environ.get('PORT', '8443'))
+    updater = Updater(TOKEN)
+    updater.dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
+    # add handlers
+    updater.start_webhook(listen="0.0.0.0",
+                        port=PORT,
+                        url_path=TOKEN)
+    updater.bot.set_webhook(os.environ.get('MY_URL') + '/' + TOKEN)
+    updater.idle()
