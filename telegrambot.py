@@ -21,10 +21,10 @@ def is_english(text):
         if not token:
             continue
     
-        if searcher.search(token.lower(), 0.85):
+        if searcher.search(token.lower(), 0.7):
             english += 1
         total += 1
-    return (english / total >= 0.7) or total < 2
+    return (english / total >= 0.5) or total < 2
 
 kulish_text = "English speaking is the pride, asset and value of Skoltech. Fluent widespread English makes Skoltech capable of becoming truly international place, attracting international students and building great careers and relationships. Hence we must be paranoid about upholding the tradition and habit of Skoltech speaking English."
 
