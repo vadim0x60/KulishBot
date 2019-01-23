@@ -5,6 +5,7 @@ from simstring.measure.cosine import CosineMeasure
 from simstring.database.dict import DictDatabase
 from simstring.searcher import Searcher
 import re
+import env
 
 db = DictDatabase(CharacterNgramFeatureExtractor(2))
 
@@ -34,7 +35,7 @@ def handle_message(bot, update):
 
 import os
 
-TOKEN = "***REMOVED***"
+TOKEN = os.environ.get('TELEGRAM_TOKEN')
 PORT = int(os.environ.get('PORT', '8443'))
 updater = Updater(TOKEN)
 updater.dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
@@ -42,5 +43,5 @@ updater.dispatcher.add_handler(MessageHandler(Filters.text, handle_message))
 updater.start_webhook(listen="0.0.0.0",
                       port=PORT,
                       url_path=TOKEN)
-updater.bot.set_webhook("https://kulish-bot.herokuapp.com/" + TOKEN)
+updater.bot.set_webhook(os.environ.get('MY_URL') + '/' + TOKEN)
 updater.idle()
